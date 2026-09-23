@@ -51,3 +51,35 @@ tmp/
 
 ### Secrets / env ###
 *.env
+
+# ==============================
+# Terraform
+# ==============================
+
+# Terraform working directories
+**/.terraform/
+
+# Terraform state
+**/*.tfstate
+**/*.tfstate.*
+
+# Terraform variable files - may contain secrets
+**/terraform.tfvars
+**/*.tfvars
+
+# Terraform plan files
+**/*.tfplan
+**/*.plan
+
+# Terraform crash logs
+**/crash.log
+**/crash.*.log
+
+# Terraform override files
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+
+# Terraform lock file
+# KEEP .terraform.lock.hcl in Git
