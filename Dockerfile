@@ -1,0 +1,36 @@
+# ─────────────────────────────────────
+# STAGE 1: BUILD
+# ─────────────────────────────────────
+
+FROM maven:3.9.16-eclipse-temurin-21-alpine AS build
+
+WORKDIR /app
+
+COPY pom.xml .
+
+RUN mvn dependency:go-offline
+
+COPY src ./src
+
+RUN mvn clean package
+
+
+# ─────────────────────────────────────
+# STAGE 2: RUNTIME
+# ─────────────────────────────────────
+
+FROM eclipse-temurin:21-jre-alpine-3.24
+
+WORKDIR /app
+
+RUN adduser -D appuser
+
+COPY --from=build /app/target/*.jar app.jar
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
+EXPOSE 8080
+
+CMD [ "java", "-jar", "app.jar" ]
