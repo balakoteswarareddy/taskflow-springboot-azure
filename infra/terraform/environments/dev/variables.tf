@@ -51,3 +51,8 @@ variable "jwt_secret" {
   type        = string
   sensitive   = true
 }
+
+variable "acr_name" {
+  description = "Globally unique Azure Container Registry name"
+  type        = string
+}

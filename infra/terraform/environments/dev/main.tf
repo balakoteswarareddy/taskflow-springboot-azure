@@ -35,6 +35,19 @@ module "key_vault" {
   jwt_secret  = var.jwt_secret
 }
 
+module "acr" {
+  source = "../../modules/acr"
+
+  project_name        = var.project_name
+  environment         = var.environment
+  location            = var.location
+  resource_group_name = azurerm_resource_group.taskflow.name
+
+  acr_name = var.acr_name
+
+  managed_identity_principal_id = module.key_vault.managed_identity_principal_id
+}
+
 module "monitoring" {
   source = "../../modules/monitoring"
 

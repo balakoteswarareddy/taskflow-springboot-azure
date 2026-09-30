@@ -14,12 +14,10 @@ variable "resource_group_name" {
   type = string
 }
 
-variable "db_password" {
-  type      = string
-  sensitive = true
+variable "acr_name" {
+  type = string
 }
 
-variable "jwt_secret" {
-  type      = string
-  sensitive = true
+variable "managed_identity_principal_id" {
+  type = string
 }
