@@ -56,3 +56,9 @@ variable "acr_name" {
   description = "Globally unique Azure Container Registry name"
   type        = string
 }
+
+variable "container_image_tag" {
+  description = "Container image tag deployed to Azure Container Apps"
+  type        = string
+  default     = "2.0"
+}

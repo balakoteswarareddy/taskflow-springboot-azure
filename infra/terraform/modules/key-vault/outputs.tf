@@ -21,3 +21,13 @@ output "managed_identity_client_id" {
 output "managed_identity_principal_id" {
   value = azurerm_user_assigned_identity.taskflow.principal_id
 }
+
+output "database_password_secret_id" {
+  description = "Versionless Key Vault secret ID for the PostgreSQL password"
+  value       = azurerm_key_vault_secret.db_password.versionless_id
+}
+
+output "jwt_secret_id" {
+  description = "Versionless Key Vault secret ID for the JWT secret"
+  value       = azurerm_key_vault_secret.jwt_secret.versionless_id
+}

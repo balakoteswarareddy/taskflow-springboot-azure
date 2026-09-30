@@ -7,11 +7,19 @@ output "postgres_server_name" {
 }
 
 output "postgres_fqdn" {
-  value = module.postgres.fqdn
+  value = module.postgres.server_fqdn
+}
+
+output "postgres_administrator_login" {
+  value = module.postgres.administrator_login
 }
 
 output "postgres_database_name" {
   value = module.postgres.database_name
+}
+
+output "log_analytics_workspace_id" {
+  value = module.monitoring.log_analytics_workspace_id
 }
 
 output "acr_name" {

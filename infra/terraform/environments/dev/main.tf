@@ -56,3 +56,33 @@ module "monitoring" {
   location            = var.location
   resource_group_name = azurerm_resource_group.taskflow.name
 }
+
+module "container_app" {
+  source = "../../modules/container-app"
+
+  project_name        = var.project_name
+  environment         = var.environment
+  location            = var.location
+  resource_group_name = azurerm_resource_group.taskflow.name
+
+  container_app_environment_name = "cae-taskflow-dev"
+  container_app_name             = "ca-taskflow-dev"
+
+  container_image  = "${module.acr.login_server}/taskapi:${var.container_image_tag}"
+  acr_login_server = module.acr.login_server
+
+  managed_identity_id = module.key_vault.managed_identity_id
+
+  key_vault_database_password_secret_id = module.key_vault.database_password_secret_id
+  key_vault_jwt_secret_id               = module.key_vault.jwt_secret_id
+
+  database_url = "jdbc:postgresql://${module.postgres.server_fqdn}:5432/${module.postgres.database_name}?sslmode=require"
+
+  database_username = module.postgres.administrator_login
+
+  log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
+
+  depends_on = [
+    module.key_vault
+  ]
+}
