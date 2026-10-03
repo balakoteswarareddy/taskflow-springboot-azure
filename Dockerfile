@@ -33,4 +33,4 @@ USER appuser
 
 EXPOSE 8080
 
-CMD [ "java", "-jar", "app.jar" ]
+ENTRYPOINT ["java", "-Duser.timezone=Asia/Kolkata", "-jar", "app.jar"]

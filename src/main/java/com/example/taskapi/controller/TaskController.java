@@ -4,7 +4,8 @@ import com.example.taskapi.dto.TaskRequest;
 import com.example.taskapi.entity.Task;
 import com.example.taskapi.service.TaskService;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,49 +22,33 @@ public class TaskController {
 
     @GetMapping
     public List<Task> getTasks(
-            Authentication authentication
+            @AuthenticationPrincipal Jwt jwt
     ) {
-
-        String email = authentication.getName();
-
-        return taskService.getTasks(email);
+        return taskService.getTasks(jwt);
     }
 
     @GetMapping("/{id}")
     public Task getTask(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal Jwt jwt
     ) {
-
-        return taskService.getTask(
-                id,
-                authentication.getName()
-        );
+        return taskService.getTask(id, jwt);
     }
 
     @PostMapping
     public Task createTask(
             @RequestBody TaskRequest request,
-            Authentication authentication
+            @AuthenticationPrincipal Jwt jwt
     ) {
-
-        return taskService.createTask(
-                request,
-                authentication.getName()
-        );
+        return taskService.createTask(request, jwt);
     }
 
     @DeleteMapping("/{id}")
     public String deleteTask(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal Jwt jwt
     ) {
-
-        taskService.deleteTask(
-                id,
-                authentication.getName()
-        );
-
+        taskService.deleteTask(id, jwt);
         return "Task deleted successfully";
     }
 }
